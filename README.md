@@ -33,3 +33,48 @@ forge build
 ```
 
 > See **docs/architecture.md** for more detail.
+
+## Configuration Sample
+
+Set the following environment variables before running the Azure Functions:
+
+```bash
+COSMOS_CONNECTION="AccountEndpoint=https://<acc>.documents.azure.com:443/;AccountKey=<key>"
+BUNDLE_DB_NAME="offline"
+BUNDLE_CONTAINER_NAME="bundles"
+QUEUE_CONNECTION="DefaultEndpointsProtocol=https;AccountName=<storage>;AccountKey=<key>;EndpointSuffix=core.windows.net"
+QUEUE_NAME="redeem-bundles"
+JWT_SIGNING_KEY="secret"
+RPC_URL="https://polygon-rpc.com"
+CONTRACT_ADDRESS="0xabcdef1234567890"
+PRIVATE_KEY="0x012345..."
+```
+
+These values configure Cosmos DB, the storage queue and Polygon contract used by
+`RedeemBundleApi` and `RedeemOrchestrator`.
+
+=======
+### Authenticator Service Sample
+
+Add OTP and QR dependencies:
+
+```xml
+<PackageReference Include="Otp.NET" Version="2.0.5" />
+<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+```
+
+In `MauiProgram.cs` register the service:
+
+```csharp
+using ZXing.Net.Maui;
+builder.UseBarcodeReader();
+builder.Services.AddSingleton<IAuthenticatorService, AuthenticatorService>();
+```
+
+Generate a TOTP code:
+
+```csharp
+var totp = AuthenticatorService.GenerateTotp("Example", "alice");
+```
+
+> See **docs/architecture.md** for more detail.

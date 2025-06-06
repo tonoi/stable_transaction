@@ -27,10 +27,15 @@ contract OfflineEscrowContract {
     function deposit(uint256 amount, bytes[] calldata serials) external {
         require(jpyc.transferFrom(msg.sender, address(this), amount), "transfer failed");
         uint256 per = amount / serials.length;
+        uint256 remainder = amount % serials.length;
         uint256 expiry = block.timestamp + 7 days;
         for (uint i=0; i<serials.length; i++) {
-            opts[serials[i]] = OPT(serials[i], per, expiry, false);
-            emit Issued(serials[i], per, expiry);
+            uint256 amt = per;
+            if (i == 0) {
+                amt += remainder;
+            }
+            opts[serials[i]] = OPT(serials[i], amt, expiry, false);
+            emit Issued(serials[i], amt, expiry);
         }
     }
 
