@@ -32,4 +32,27 @@ Contracts:
 forge build
 ```
 
+### Authenticator Service Sample
+
+Add OTP and QR dependencies:
+
+```xml
+<PackageReference Include="Otp.NET" Version="2.0.5" />
+<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+```
+
+In `MauiProgram.cs` register the service:
+
+```csharp
+using ZXing.Net.Maui;
+builder.UseBarcodeReader();
+builder.Services.AddSingleton<IAuthenticatorService, AuthenticatorService>();
+```
+
+Generate a TOTP code:
+
+```csharp
+var totp = AuthenticatorService.GenerateTotp("Example", "alice");
+```
+
 > See **docs/architecture.md** for more detail.
