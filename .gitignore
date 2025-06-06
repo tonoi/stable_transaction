@@ -6,4 +6,7 @@ obj/
 .env
 .env.local
 node_modules/
+lib/
+out/
+cache/
 __pycache__/
