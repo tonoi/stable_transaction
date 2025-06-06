@@ -3,8 +3,20 @@
     string code = "";
     async Task OnSubmit()
     {
-        // TODO: validate code
-        await Shell.Current.GoToAsync("/wallet");
+        var saved = await SecureStorage.Default.GetAsync("passcode");
+        if (string.IsNullOrEmpty(saved))
+        {
+            await Shell.Current.DisplayAlert("Error", "Passcode not set", "OK");
+            return;
+        }
+        if (saved == code)
+        {
+            await Shell.Current.GoToAsync("/wallet");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "Invalid passcode", "OK");
+        }
     }
 }
 <VerticalStackLayout Padding="30">
