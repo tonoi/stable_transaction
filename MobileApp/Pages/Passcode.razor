@@ -1,0 +1,14 @@
+@page "/passcode"
+@code {
+    string code = "";
+    async Task OnSubmit()
+    {
+        // TODO: validate code
+        await Shell.Current.GoToAsync("/wallet");
+    }
+}
+<VerticalStackLayout Padding="30">
+    <Label Text="Enter Passcode" FontSize="24"/>
+    <Entry Text="@code" IsPassword="true"/>
+    <Button Text="Submit" OnClick="@OnSubmit"/>
+</VerticalStackLayout>

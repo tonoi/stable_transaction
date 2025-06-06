@@ -1,0 +1,21 @@
+@page "/merchant"
+@inject MerchantService Merchant
+
+<VerticalStackLayout Padding="20">
+    <Label Text="Merchant POS" FontSize="24"/>
+    <CollectionView ItemsSource="Merchant.PendingRedeems">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <HorizontalStackLayout>
+                    <Label Text="{Binding Amount}" FontSize="20"/>
+                    <Label Text="{Binding UserHash}" FontSize="12"/>
+                </HorizontalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    <Button Text="Sync to Cloud" OnClick="Sync"/>
+</VerticalStackLayout>
+
+@code {
+    async Task Sync() => await Merchant.SyncAsync();
+}

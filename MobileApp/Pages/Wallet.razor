@@ -1,0 +1,18 @@
+@page "/wallet"
+@using JPYCOffline.Services
+@inject WalletService WalletSvc
+
+<VerticalStackLayout Padding="20">
+    <Label Text="Balance" FontSize="22"/>
+    <Label Text="@($"{WalletSvc.Balance} JPYC")" FontSize="36" FontAttributes="Bold"/>
+
+    <Button Text="Send (Offline)" OnClick="SendOffline"/>
+</VerticalStackLayout>
+
+@code {
+    async Task SendOffline()
+    {
+        // navigate to merchant scan page
+        await Shell.Current.GoToAsync("/send");
+    }
+}

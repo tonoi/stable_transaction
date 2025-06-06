@@ -1,0 +1,18 @@
+@page "/bioauth"
+@inject IAuthenticatorService Auth
+
+<VerticalStackLayout Padding="30">
+    <Label Text="Biometric Authentication" FontSize="24"/>
+    <Button Text="Authenticate" OnClick="Authenticate"/>
+</VerticalStackLayout>
+
+@code {
+    async Task Authenticate()
+    {
+        var ok = await Auth.AuthenticateAsync();
+        if (ok)
+        {
+            await Shell.Current.GoToAsync("/wallet");
+        }
+    }
+}
