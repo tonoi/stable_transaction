@@ -32,5 +32,7 @@
 
     <!-- BouncyCastle をバージョン固定して警告解消 -->
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.10" />
+    <!-- Biometric authentication -->
+    <PackageReference Include="Xamarin.Google.AndroidX.Biometric" Version="1.1.0.9" />
   </ItemGroup>
 </Project>
