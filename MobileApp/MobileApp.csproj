@@ -1,21 +1,36 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">   <!-- 変更点 -->
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>JPYCOffline</RootNamespace>
-    <SingleProject>true</SingleProject>
+    <TargetFrameworks>
+      net8.0-android;net8.0-ios;net8.0-maccatalyst
+    </TargetFrameworks>
     <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- Razor SDK が静的アセット用ターゲットを追加する -->
+    <EnableStaticWebAssets>true</EnableStaticWebAssets>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.0" />
-    <PackageReference Include="WalletConnectSharp" Version="2.3.2" />
-    <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
-    <PackageReference Include="Plugin.NFC" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.60.0" />
-  </ItemGroup>
+    <!-- UI ランタイム -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.3" />
 
+    <!-- Web3／WalletConnect -->
+    <PackageReference Include="WalletConnect.Core" Version="2.4.3" />
+
+    <!-- NFC 代替プラグイン (.NET 8 対応) -->
+    <PackageReference Include="TRNSPRNT.NFC" Version="1.2.0" />
+
+    <!-- Ethereum -->
+    <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
+
+    <!-- MSAL 最新版で脆弱性回避 -->
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.72.1" />
+
+    <!-- BouncyCastle をバージョン固定して警告解消 -->
+    <PackageReference Update="Portable.BouncyCastle" Version="1.8.10" />
+  </ItemGroup>
 </Project>
