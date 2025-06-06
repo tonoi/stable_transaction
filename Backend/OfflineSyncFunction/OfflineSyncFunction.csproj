@@ -10,6 +10,12 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.15.1" OutputItemType="Analyzer" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.37.0" />
     <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.16.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\RedeemBundle.cs" Link="RedeemBundle.cs" />
   </ItemGroup>
 
 </Project>
