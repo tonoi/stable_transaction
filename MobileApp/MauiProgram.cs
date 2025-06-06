@@ -18,8 +18,11 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-
+        // Register services and view models for dependency injection
+        builder.Services.AddSingleton<WalletService>();
+        builder.Services.AddSingleton<MerchantService>();
         builder.Services.AddSingleton<IAuthenticatorService, AuthenticatorService>();
+        builder.Services.AddSingleton<LoginViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

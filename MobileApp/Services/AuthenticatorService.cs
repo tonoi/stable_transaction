@@ -1,10 +1,15 @@
 using System.Text.Json;
 using OtpNet;
-
 namespace JPYCOffline.Services;
 
 public class AuthenticatorService : IAuthenticatorService
 {
+    public Task<bool> AuthenticateAsync()
+    {
+        // TODO: integrate platform-specific biometric authentication
+        return Task.FromResult(true);
+    }
+
     const string AccountsKey = "auth_accounts";
     readonly IKeyValueStore _store;
     Dictionary<string, string> _accounts = new();
