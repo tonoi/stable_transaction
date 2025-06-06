@@ -1,0 +1,81 @@
+@page "/auth-accounts"
+@using ZXing.Net.Maui.Controls
+@inject IAuthenticatorService Auth
+
+<VerticalStackLayout Padding="20">
+    <Label Text="Authenticator Accounts" FontSize="24" />
+    <CollectionView ItemsSource="_accounts">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="ExecuteOnly">
+                            <SwipeItem Text="Delete" BackgroundColor="Red" OnInvoked="@(() => DeleteAccount((AccountItem)BindingContext))" />
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <HorizontalStackLayout Padding="10">
+                        <Label Text="{Binding Issuer}" FontAttributes="Bold" />
+                        <Label Text="{Binding AccountName}" Margin="10,0" />
+                        <Label Text="{Binding Code}" FontAttributes="Bold" />
+                    </HorizontalStackLayout>
+                </SwipeView>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    <Button Text="Add via QR" OnClick="StartScan" />
+    @if (_scanning)
+    {
+        <CameraBarcodeReaderView x:Name="scanner" BarcodesDetected="OnDetected" />
+    }
+</VerticalStackLayout>
+
+@code {
+    bool _scanning;
+    List<AccountItem> _accounts = new();
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    async Task LoadAsync()
+    {
+        var accts = await Auth.GetAccountsAsync();
+        _accounts = accts.Select(a => new AccountItem
+        {
+            Issuer = a.Issuer,
+            AccountName = a.AccountName,
+            Code = Auth.GenerateTotp(a.Issuer, a.AccountName)
+        }).ToList();
+    }
+
+    void StartScan() => _scanning = true;
+
+    async void OnDetected(object sender, BarcodeDetectionEventArgs e)
+    {
+        _scanning = false;
+        var value = e.Results.FirstOrDefault()?.Value;
+        if (value is null) return;
+        var uri = new Uri(value);
+        if (uri.Scheme == "otpauth")
+        {
+            var account = Uri.UnescapeDataString(uri.AbsolutePath.Trim('/'));
+            var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+            var secret = query["secret"] ?? "";
+            var issuer = query["issuer"] ?? "";
+            await Auth.AddAccountAsync(issuer, account, secret);
+            await LoadAsync();
+            StateHasChanged();
+        }
+    }
+
+    async Task DeleteAccount(AccountItem item)
+    {
+        await Auth.RemoveAccountAsync(item.Issuer, item.AccountName);
+        _accounts.Remove(item);
+    }
+
+    class AccountItem
+    {
+        public string Issuer { get; set; } = "";
+        public string AccountName { get; set; } = "";
+        public string Code { get; set; } = "";
+    }
+}
