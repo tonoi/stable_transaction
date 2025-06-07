@@ -2,8 +2,8 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "../contracts/OfflineEscrowContract.sol";
-import "../contracts/MockERC20.sol";
+import "../SmartContracts/OfflineEscrowContract.sol";
+import "../SmartContracts/MockERC20.sol";
 
 contract DepositTest is Test {
     OfflineEscrowContract escrow;
