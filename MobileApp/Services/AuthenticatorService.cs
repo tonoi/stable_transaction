@@ -24,6 +24,7 @@ public class AuthenticatorService : IAuthenticatorService
 
     const string AccountsKey = "auth_accounts";
     readonly IKeyValueStore _store;
+    readonly object _lock = new();
     Dictionary<string, string> _accounts = new();
     bool _loaded = false;
 
@@ -40,12 +41,24 @@ public class AuthenticatorService : IAuthenticatorService
     {
         if (_loaded) return;
         var json = await _store.GetAsync(AccountsKey);
-        if (!string.IsNullOrEmpty(json))
-            _accounts = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new();
-        _loaded = true;
+        lock (_lock)
+        {
+            if (_loaded) return;
+            if (!string.IsNullOrEmpty(json))
+                _accounts = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new();
+            _loaded = true;
+        }
     }
 
-    async Task PersistAsync() => await _store.SetAsync(AccountsKey, JsonSerializer.Serialize(_accounts));
+    async Task PersistAsync()
+    {
+        Dictionary<string, string> snapshot;
+        lock (_lock)
+        {
+            snapshot = new Dictionary<string, string>(_accounts);
+        }
+        await _store.SetAsync(AccountsKey, JsonSerializer.Serialize(snapshot));
+    }
 
     string Key(string issuer, string account) => $"{issuer}:{account}";
 
@@ -53,32 +66,47 @@ public class AuthenticatorService : IAuthenticatorService
     public async Task AddAccountAsync(string issuer, string accountName, string secret)
     {
         await EnsureLoadedAsync();
-        _accounts[Key(issuer, accountName)] = secret;
+        lock (_lock)
+        {
+            _accounts[Key(issuer, accountName)] = secret;
+        }
         await PersistAsync();
     }
 
     public async Task RemoveAccountAsync(string issuer, string accountName)
     {
         await EnsureLoadedAsync();
-        _accounts.Remove(Key(issuer, accountName));
+        lock (_lock)
+        {
+            _accounts.Remove(Key(issuer, accountName));
+        }
         await PersistAsync();
     }
 
     public async Task<IReadOnlyList<AuthenticatorAccount>> GetAccountsAsync()
     {
         await EnsureLoadedAsync();
-        return _accounts.Keys.Select(k =>
+        List<AuthenticatorAccount> result;
+        lock (_lock)
         {
-            var parts = k.Split(':', 2);
-            return new AuthenticatorAccount(parts[0], parts[1]);
-        }).ToList();
+            result = _accounts.Keys.Select(k =>
+            {
+                var parts = k.Split(':', 2);
+                return new AuthenticatorAccount(parts[0], parts[1]);
+            }).ToList();
+        }
+        return result;
     }
 
     public async Task<string> GenerateTotpAsync(string issuer, string accountName)
     {
         await EnsureLoadedAsync();
-        if (!_accounts.TryGetValue(Key(issuer, accountName), out var secret))
-            throw new InvalidOperationException("Account not found");
+        string secret;
+        lock (_lock)
+        {
+            if (!_accounts.TryGetValue(Key(issuer, accountName), out secret))
+                throw new InvalidOperationException("Account not found");
+        }
         var totp = new Totp(Base32Encoding.ToBytes(secret));
         return totp.ComputeTotp(DateTime.UtcNow);
     }
