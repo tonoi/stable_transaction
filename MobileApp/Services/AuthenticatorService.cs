@@ -37,7 +37,6 @@ public class AuthenticatorService : IAuthenticatorService
 
     string Key(string issuer, string account) => $"{issuer}:{account}";
 
-    public Task<bool> AuthenticateAsync() => Task.FromResult(true);
 
     public async Task AddAccountAsync(string issuer, string accountName, string secret)
     {
