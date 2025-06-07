@@ -1,0 +1,23 @@
+@page "/settings"
+@inject IAuthenticatorService Auth
+
+@code {
+    string passcode = "";
+    async Task SavePasscode()
+    {
+        await SecureStorage.Default.SetAsync("passcode", passcode);
+        await Shell.Current.DisplayAlert("Saved", "Passcode set", "OK");
+    }
+    async Task RegisterBio()
+    {
+        if (await Auth.AuthenticateAsync())
+            await Shell.Current.DisplayAlert("Registered", "Biometric enabled", "OK");
+    }
+}
+
+<VerticalStackLayout Padding="30">
+    <Label Text="Settings" FontSize="24" />
+    <Entry Placeholder="New Passcode" IsPassword="true" Text="@passcode" />
+    <Button Text="Save Passcode" OnClick="SavePasscode" />
+    <Button Text="Register Biometric" OnClick="RegisterBio" />
+</VerticalStackLayout>

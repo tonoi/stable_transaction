@@ -1,0 +1,21 @@
+@page "/signup"
+@inject UserService UserSvc
+
+@code {
+    string username = "";
+    string password = "";
+    async Task OnSubmit()
+    {
+        if (await UserSvc.SignUpAsync(username, password))
+            await Shell.Current.DisplayAlert("Success", "Account created", "OK");
+        else
+            await Shell.Current.DisplayAlert("Error", "Failed to sign up", "OK");
+    }
+}
+
+<VerticalStackLayout Padding="30">
+    <Label Text="Create Account" FontSize="24" />
+    <Entry Placeholder="Username" Text="@username" />
+    <Entry Placeholder="Password" IsPassword="true" Text="@password" />
+    <Button Text="Sign Up" OnClick="OnSubmit" />
+</VerticalStackLayout>

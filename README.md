@@ -45,6 +45,7 @@ BUNDLE_CONTAINER_NAME="bundles"
 QUEUE_CONNECTION="DefaultEndpointsProtocol=https;AccountName=<storage>;AccountKey=<key>;EndpointSuffix=core.windows.net"
 QUEUE_NAME="redeem-bundles"
 JWT_SIGNING_KEY="secret"
+USER_CONTAINER_NAME="users"
 RPC_URL="https://polygon-rpc.com"
 CONTRACT_ADDRESS="0xabcdef1234567890"
 PRIVATE_KEY="0x012345..."
@@ -52,6 +53,15 @@ PRIVATE_KEY="0x012345..."
 
 These values configure Cosmos DB, the storage queue and Polygon contract used by
 `RedeemBundleApi` and `RedeemOrchestrator`.
+
+### User Authentication
+
+The backend exposes two additional endpoints for account management:
+
+- `POST /api/signup` creates a new user with JSON `{ "username": "alice", "password": "pw" }`.
+- `POST /api/signin` validates credentials and returns `{ "token": "<jwt>" }`.
+
+Use this JWT in the `Authorization` header when calling secured APIs such as `RedeemBundle`.
 
 =======
 ### Authenticator Service Sample

@@ -12,10 +12,12 @@
     <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
     <PackageReference Include="Azure.Storage.Queues" Version="12.16.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\Shared\RedeemBundle.cs" Link="RedeemBundle.cs" />
+    <Compile Include="..\Shared\User.cs" Link="User.cs" />
   </ItemGroup>
 
 </Project>
