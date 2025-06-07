@@ -4,6 +4,9 @@
 
 <VerticalStackLayout Padding="30">
     <Label Text="JPYC Wallet Login" FontSize="24" HorizontalOptions="Center" />
-    <Button Text="Continue with Passkey" OnClick="@VM.OnPasskeyAsync" />
+    <Entry Placeholder="Username" Text="@bind-Value=VM.Username" />
+    <Entry Placeholder="Password" IsPassword="true" Text="@bind-Value=VM.Password" />
+    <Button Text="Sign In" OnClick="@VM.OnSignInAsync" />
+    <Button Text="Sign Up" OnClick="@(() => Navigation.PushAsync(new SignUp()))" />
     <Button Text="Use Passcode" OnClick="@(() => Navigation.PushAsync(new Passcode()))" />
 </VerticalStackLayout>

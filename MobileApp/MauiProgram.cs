@@ -22,6 +22,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<WalletService>();
         builder.Services.AddSingleton<MerchantService>();
         builder.Services.AddSingleton<IAuthenticatorService, AuthenticatorService>();
+        builder.Services.AddSingleton<UserService>();
         builder.Services.AddSingleton<LoginViewModel>();
 
 #if DEBUG
