@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run .NET tests
+        run: dotnet test stable_transaction.sln --no-build --verbosity normal
+      - name: Setup Foundry
+        uses: onbjerg/foundry-toolchain@v1
+        with:
+          version: latest
+      - name: Install Solidity dependencies
+        run: |
+          forge install openzeppelin/openzeppelin-contracts foundry-rs/forge-std eth-infinitism/account-abstraction
+      - name: Run Solidity tests
+        run: forge test -vvv
