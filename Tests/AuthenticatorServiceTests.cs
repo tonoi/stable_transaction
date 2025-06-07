@@ -20,6 +20,27 @@ public class AuthenticatorServiceTests
         Assert.Equal(2, accounts.Count);
     }
 
+    [Fact]
+    public async Task RemoveAccountPersists()
+    {
+        var store = new InMemoryStore();
+        var service = new AuthenticatorService(store);
+        await service.AddAccountAsync("Test", "alice", "JBSWY3DPEHPK3PXP");
+        await service.RemoveAccountAsync("Test", "alice");
+
+        var service2 = new AuthenticatorService(store);
+        var accounts = await service2.GetAccountsAsync();
+        Assert.Empty(accounts);
+    }
+
+    [Fact]
+    public async Task GenerateMissingAccountThrows()
+    {
+        var service = new AuthenticatorService(new InMemoryStore());
+        await Assert.ThrowsAsync<InvalidOperationException>(
+            () => service.GenerateTotpAsync("Test", "missing"));
+    }
+
     class InMemoryStore : IKeyValueStore
     {
         readonly Dictionary<string,string> _dict = new();
