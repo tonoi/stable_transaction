@@ -74,9 +74,9 @@ public class AuthenticatorService : IAuthenticatorService
         }).ToList();
     }
 
-    public string GenerateTotp(string issuer, string accountName)
+    public async Task<string> GenerateTotpAsync(string issuer, string accountName)
     {
-        EnsureLoadedAsync().GetAwaiter().GetResult();
+        await EnsureLoadedAsync();
         if (!_accounts.TryGetValue(Key(issuer, accountName), out var secret))
             throw new InvalidOperationException("Account not found");
         var totp = new Totp(Base32Encoding.ToBytes(secret));

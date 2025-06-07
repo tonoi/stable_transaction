@@ -38,12 +38,16 @@
     async Task LoadAsync()
     {
         var accts = await Auth.GetAccountsAsync();
-        _accounts = accts.Select(a => new AccountItem
+        _accounts = new List<AccountItem>();
+        foreach (var a in accts)
         {
-            Issuer = a.Issuer,
-            AccountName = a.AccountName,
-            Code = Auth.GenerateTotp(a.Issuer, a.AccountName)
-        }).ToList();
+            _accounts.Add(new AccountItem
+            {
+                Issuer = a.Issuer,
+                AccountName = a.AccountName,
+                Code = await Auth.GenerateTotpAsync(a.Issuer, a.AccountName)
+            });
+        }
     }
 
     void StartScan() => _scanning = true;

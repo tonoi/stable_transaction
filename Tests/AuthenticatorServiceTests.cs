@@ -12,7 +12,7 @@ public class AuthenticatorServiceTests
         await service.AddAccountAsync("Test", "alice", "JBSWY3DPEHPK3PXP");
         await service.AddAccountAsync("Test", "bob", "JBSWY3DPEHPK3PXP");
 
-        var code = service.GenerateTotp("Test", "alice");
+        var code = await service.GenerateTotpAsync("Test", "alice");
         Assert.Equal(6, code.Length);
 
         var service2 = new AuthenticatorService(store);
