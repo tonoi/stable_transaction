@@ -1,13 +1,25 @@
 using System.Text.Json;
 using OtpNet;
+#if ANDROID || IOS || MACCATALYST
+using Plugin.Fingerprint;
+using Plugin.Fingerprint.Abstractions;
+#endif
 namespace JPYCOffline.Services;
 
 public class AuthenticatorService : IAuthenticatorService
 {
-    public Task<bool> AuthenticateAsync()
+    public async Task<bool> AuthenticateAsync()
     {
-        // TODO: integrate platform-specific biometric authentication
-        return Task.FromResult(true);
+#if ANDROID || IOS || MACCATALYST
+        var request = new Plugin.Fingerprint.Abstractions.AuthenticationRequestConfiguration(
+            "Biometric Authentication", "Authenticate to continue");
+        var result = await Plugin.Fingerprint.CrossFingerprint.Current.AuthenticateAsync(request);
+        return result.Authenticated;
+#else
+        // Stub for unsupported platforms
+        await Task.CompletedTask;
+        return true;
+#endif
     }
 
     const string AccountsKey = "auth_accounts";

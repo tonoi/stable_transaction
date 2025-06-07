@@ -36,5 +36,6 @@
     <!-- OTP & QR -->
     <PackageReference Include="Otp.NET" Version="2.0.5" />
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+    <PackageReference Include="Plugin.Fingerprint" Version="2.1.5" />
   </ItemGroup>
 </Project>
