@@ -74,7 +74,7 @@ builder.Services.AddSingleton<IAuthenticatorService, AuthenticatorService>();
 Generate a TOTP code:
 
 ```csharp
-var totp = AuthenticatorService.GenerateTotp("Example", "alice");
+var totp = await AuthenticatorService.GenerateTotpAsync("Example", "alice");
 ```
 
 > See **docs/architecture.md** for more detail.

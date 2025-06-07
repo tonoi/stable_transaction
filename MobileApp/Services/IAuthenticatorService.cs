@@ -12,5 +12,5 @@ public interface IAuthenticatorService
 
     Task<IReadOnlyList<AuthenticatorAccount>> GetAccountsAsync();
 
-    string GenerateTotp(string issuer, string accountName);
+    Task<string> GenerateTotpAsync(string issuer, string accountName);
 }
