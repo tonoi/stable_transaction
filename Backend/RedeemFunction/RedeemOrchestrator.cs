@@ -48,7 +48,7 @@ public class RedeemOrchestrator
                 var container = _cosmos.GetContainer(_db, _container);
                 var response = await container.ReadItemAsync<RedeemBundle>(id, new PartitionKey(id));
                 var bundle = response.Resource;
-                if (bundle.processed)
+                if (bundle.Processed)
                 {
                     await _queue.DeleteMessageAsync(msg.MessageId, msg.PopReceipt);
                     continue;
@@ -57,10 +57,10 @@ public class RedeemOrchestrator
                 var abi = "[{\"inputs\":[{\"internalType\":\"bytes[]\",\"name\":\"serials\",\"type\":\"bytes[]\"}],\"name\":\"redeemBundle\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]";
                 var contract = _web3.Eth.GetContract(abi, _contract);
                 var func = contract.GetFunction("redeemBundle");
-                await func.SendTransactionAsync(_web3.TransactionManager.Account?.Address, new object[] { bundle.serials });
+                await func.SendTransactionAsync(_web3.TransactionManager.Account?.Address, new object[] { bundle.Serials });
 
-                bundle.processed = true;
-                await container.ReplaceItemAsync(bundle, bundle.id);
+                bundle.Processed = true;
+                await container.ReplaceItemAsync(bundle, bundle.Id);
                 await _queue.DeleteMessageAsync(msg.MessageId, msg.PopReceipt);
             }
             catch (Exception ex)

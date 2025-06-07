@@ -67,9 +67,9 @@ public class RedeemBundleApi
         var db = Environment.GetEnvironmentVariable("BUNDLE_DB_NAME") ?? "offline";
         var containerName = Environment.GetEnvironmentVariable("BUNDLE_CONTAINER_NAME") ?? "bundles";
         var container = _cosmos.GetContainer(db, containerName);
-        await container.CreateItemAsync(bundle);
+        await container.CreateItemAsync(bundle, new PartitionKey(bundle.Id));
 
-        await _queue.SendMessageAsync(bundle.id);
+        await _queue.SendMessageAsync(bundle.Id);
 
         var res = req.CreateResponse(System.Net.HttpStatusCode.Accepted);
         await res.WriteStringAsync("{\"status\":\"accepted\"}");
