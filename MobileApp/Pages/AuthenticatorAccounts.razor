@@ -1,16 +1,17 @@
 @page "/auth-accounts"
 @using ZXing.Net.Maui.Controls
+@using ZXing.Net.Maui
 @inject IAuthenticatorService Auth
 
 <VerticalStackLayout Padding="20">
     <Label Text="Authenticator Accounts" FontSize="24" />
     <CollectionView ItemsSource="_accounts">
         <CollectionView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate Context="acct">
                 <SwipeView>
                     <SwipeView.RightItems>
                         <SwipeItems Mode="ExecuteOnly">
-                            <SwipeItem Text="Delete" BackgroundColor="Red" OnInvoked="@(() => DeleteAccount((AccountItem)BindingContext))" />
+                            <SwipeItem Text="Delete" BackgroundColor="Red" OnInvoked="@(() => DeleteAccount(acct))" />
                         </SwipeItems>
                     </SwipeView.RightItems>
                     <HorizontalStackLayout Padding="10">

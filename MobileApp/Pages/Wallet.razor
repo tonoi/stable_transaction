@@ -7,7 +7,7 @@
     <Label Text="@($"{WalletSvc.Balance} JPYC")" FontSize="36" FontAttributes="Bold"/>
 
     <Button Text="Send (Offline)" OnClick="SendOffline"/>
-    <Button Text="Settings" OnClick="@(() => Navigation.PushAsync(new Settings()))" />
+    <Button Text="Settings" OnClick='@(() => Shell.Current.GoToAsync("/settings"))' />
 </VerticalStackLayout>
 
 @code {
