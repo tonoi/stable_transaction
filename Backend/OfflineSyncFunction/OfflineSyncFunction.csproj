@@ -12,7 +12,7 @@
     <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
     <PackageReference Include="Azure.Storage.Queues" Version="12.16.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
