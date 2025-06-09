@@ -32,7 +32,8 @@ Contracts:
 forge build
 ```
 
-> See **docs/architecture.md** for more detail.
+ > See **docs/architecture.md** for more detail.
+ > 初期設定の手順は **docs/azure-setup-ja.md** を参照してください。
 
 ## Configuration Sample
 
