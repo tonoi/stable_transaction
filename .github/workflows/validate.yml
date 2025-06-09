@@ -1,0 +1,48 @@
+name: Validate and Dispatch
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      ci: ${{ steps.filter.outputs.ci }}
+      android: ${{ steps.filter.outputs.android }}
+      azure: ${{ steps.filter.outputs.azure }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            ci:
+              - 'SmartContracts/**'
+              - 'tests/**'
+              - '.github/workflows/ci.yml'
+              - 'Backend/**'
+            android:
+              - 'MobileApp/**'
+              - '.github/workflows/android_build.yml'
+            azure:
+              - 'Backend/**'
+              - '.github/workflows/azure-deploy.yml'
+  ci:
+    needs: filter
+    if: needs.filter.outputs.ci == 'true'
+    uses: ./.github/workflows/ci.yml
+  android:
+    needs: filter
+    if: needs.filter.outputs.android == 'true'
+    uses: ./.github/workflows/android_build.yml
+  azure:
+    needs: filter
+    if: needs.filter.outputs.azure == 'true'
+    uses: ./.github/workflows/azure-deploy.yml
+    secrets:
+      OFFLINE_FUNCTIONAPP_NAME: ${{ secrets.OFFLINE_FUNCTIONAPP_NAME }}
+      OFFLINE_FUNCTIONAPP_PUBLISH_PROFILE: ${{ secrets.OFFLINE_FUNCTIONAPP_PUBLISH_PROFILE }}
+      REDEEM_FUNCTIONAPP_NAME: ${{ secrets.REDEEM_FUNCTIONAPP_NAME }}
+      REDEEM_FUNCTIONAPP_PUBLISH_PROFILE: ${{ secrets.REDEEM_FUNCTIONAPP_PUBLISH_PROFILE }}
