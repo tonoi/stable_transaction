@@ -15,7 +15,7 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Run .NET tests
-        run: dotnet test stable_transaction.sln --no-build --verbosity normal
+        run: dotnet test tests/dotnet/Tests.csproj --no-build --verbosity normal
       - name: Setup Foundry
         uses: onbjerg/foundry-toolchain@v1
         with:
