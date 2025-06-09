@@ -27,14 +27,14 @@ jobs:
 
     - name: Upload Debug APK
       if: success()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
         path: MobileApp/bin/Debug/net8.0-android/publish/*.apk
 
     - name: Upload Release AAB
       if: success()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: app-release-aab
         path: MobileApp/bin/Release/net8.0-android/publish/*.aab
