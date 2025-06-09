@@ -1,21 +1,22 @@
 @page "/merchant"
-@inject MerchantService Merchant
+@inject MerchantService MerchantSvc
 
-<VerticalStackLayout Padding="20">
-    <Label Text="Merchant POS" FontSize="24"/>
-    <CollectionView ItemsSource="Merchant.PendingRedeems">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <HorizontalStackLayout>
-                    <Label Text="{Binding Amount}" FontSize="20"/>
-                    <Label Text="{Binding UserHash}" FontSize="12"/>
-                </HorizontalStackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-    <Button Text="Sync to Cloud" OnClick="Sync"/>
-</VerticalStackLayout>
+<div style="padding: 20px;">
+    <h1 style="font-size: 24px;">Merchant POS</h1>
+    @foreach (var redeem in MerchantSvc.PendingRedeems)
+    {
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+            <strong>@redeem.Amount JPYC</strong>
+            <span style="margin-left: 10px;">@redeem.UserHash</span>
+        </div>
+    }
+    <button @onclick="Sync">Sync to Cloud</button>
+</div>
 
 @code {
-    async Task Sync() => await Merchant.SyncAsync();
+    async Task Sync()
+    {
+        await MerchantSvc.SyncAsync();
+        await Shell.Current.DisplayAlert("Synced", "Transactions synced to cloud", "OK");
+    }
 }

@@ -1,21 +1,29 @@
 @page "/signup"
-@inject UserService UserSvc
+
+<div style="padding: 30px;">
+    <h1 style="font-size: 24px;">Create Account</h1>
+    <input placeholder="Username" @bind-value="username" />
+    <input placeholder="Password" type="password" @bind-value="password" />
+    <button @onclick="OnSubmit">Sign Up</button>
+</div>
 
 @code {
     string username = "";
     string password = "";
+
     async Task OnSubmit()
     {
-        if (await UserSvc.SignUpAsync(username, password))
-            await Shell.Current.DisplayAlert("Success", "Account created", "OK");
-        else
-            await Shell.Current.DisplayAlert("Error", "Failed to sign up", "OK");
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            await Shell.Current.DisplayAlert("Error", "Username and password are required", "OK");
+            return;
+        }
+
+        // Save user credentials (in a real app, this should be properly hashed)
+        await SecureStorage.Default.SetAsync("username", username);
+        await SecureStorage.Default.SetAsync("password", password);
+
+        await Shell.Current.DisplayAlert("Success", "Account created successfully", "OK");
+        await Shell.Current.GoToAsync("/login");
     }
 }
-
-<VerticalStackLayout Padding="30">
-    <Label Text="Create Account" FontSize="24" />
-    <Entry Placeholder="Username" Text="@username" />
-    <Entry Placeholder="Password" IsPassword="true" Text="@password" />
-    <Button Text="Sign Up" OnClick="OnSubmit" />
-</VerticalStackLayout>

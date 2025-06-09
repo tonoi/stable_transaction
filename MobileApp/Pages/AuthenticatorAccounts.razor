@@ -1,34 +1,23 @@
 @page "/auth-accounts"
-@using ZXing.Net.Maui.Controls
-@using ZXing.Net.Maui
 @inject IAuthenticatorService Auth
 
-<VerticalStackLayout Padding="20">
-    <Label Text="Authenticator Accounts" FontSize="24" />
-    <CollectionView ItemsSource="_accounts">
-        <CollectionView.ItemTemplate>
-            <DataTemplate Context="acct">
-                <SwipeView>
-                    <SwipeView.RightItems>
-                        <SwipeItems Mode="ExecuteOnly">
-                            <SwipeItem Text="Delete" BackgroundColor="Red" OnInvoked="@(() => DeleteAccount(acct))" />
-                        </SwipeItems>
-                    </SwipeView.RightItems>
-                    <HorizontalStackLayout Padding="10">
-                        <Label Text="{Binding Issuer}" FontAttributes="Bold" />
-                        <Label Text="{Binding AccountName}" Margin="10,0" />
-                        <Label Text="{Binding Code}" FontAttributes="Bold" />
-                    </HorizontalStackLayout>
-                </SwipeView>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-    <Button Text="Add via QR" OnClick="StartScan" />
+<div style="padding: 20px;">
+    <h1 style="font-size: 24px;">Authenticator Accounts</h1>
+    @foreach (var acct in _accounts)
+    {
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+            <strong>@acct.Issuer</strong>
+            <span style="margin-left: 10px;">@acct.AccountName</span>
+            <strong style="margin-left: 10px;">@acct.Code</strong>
+            <button @onclick="(() => DeleteAccount(acct))" style="background-color: red; color: white; margin-left: 10px;">Delete</button>
+        </div>
+    }
+    <button @onclick="StartScan">Add via QR</button>
     @if (_scanning)
     {
-        <CameraBarcodeReaderView x:Name="scanner" BarcodesDetected="OnDetected" />
+        <p>QR Scanner not available in this version</p>
     }
-</VerticalStackLayout>
+</div>
 
 @code {
     bool _scanning;
@@ -52,24 +41,6 @@
     }
 
     void StartScan() => _scanning = true;
-
-    async void OnDetected(object sender, BarcodeDetectionEventArgs e)
-    {
-        _scanning = false;
-        var value = e.Results.FirstOrDefault()?.Value;
-        if (value is null) return;
-        var uri = new Uri(value);
-        if (uri.Scheme == "otpauth")
-        {
-            var account = Uri.UnescapeDataString(uri.AbsolutePath.Trim('/'));
-            var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-            var secret = query["secret"] ?? "";
-            var issuer = query["issuer"] ?? "";
-            await Auth.AddAccountAsync(issuer, account, secret);
-            await LoadAsync();
-            StateHasChanged();
-        }
-    }
 
     async Task DeleteAccount(AccountItem item)
     {

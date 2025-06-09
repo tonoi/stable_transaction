@@ -1,10 +1,10 @@
 @page "/bioauth"
 @inject IAuthenticatorService Auth
 
-<VerticalStackLayout Padding="30">
-    <Label Text="Biometric Authentication" FontSize="24"/>
-    <Button Text="Authenticate" OnClick="Authenticate"/>
-</VerticalStackLayout>
+<div style="padding: 30px;">
+    <h1 style="font-size: 24px;">Biometric Authentication</h1>
+    <button @onclick="Authenticate">Authenticate</button>
+</div>
 
 @code {
     async Task Authenticate()

@@ -1,26 +1,25 @@
 @page "/passcode"
+
+<div style="padding: 30px;">
+    <h1 style="font-size: 24px;">Enter Passcode</h1>
+    <input @bind-value="code" type="password" />
+    <button @onclick="@OnSubmit">Submit</button>
+</div>
+
 @code {
     string code = "";
+
     async Task OnSubmit()
     {
-        var saved = await SecureStorage.Default.GetAsync("passcode");
-        if (string.IsNullOrEmpty(saved))
-        {
-            await Shell.Current.DisplayAlert("Error", "Passcode not set", "OK");
-            return;
-        }
-        if (saved == code)
+        var stored = await SecureStorage.Default.GetAsync("passcode");
+        if (stored == code)
         {
             await Shell.Current.GoToAsync("/wallet");
         }
         else
         {
             await Shell.Current.DisplayAlert("Error", "Invalid passcode", "OK");
+            code = "";
         }
     }
 }
-<VerticalStackLayout Padding="30">
-    <Label Text="Enter Passcode" FontSize="24"/>
-    <Entry Text="@code" IsPassword="true"/>
-    <Button Text="Submit" OnClick="@OnSubmit"/>
-</VerticalStackLayout>

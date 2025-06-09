@@ -12,6 +12,7 @@
 
     <!-- Razor SDK が静的アセット用ターゲットを追加する -->
     <EnableStaticWebAssets>true</EnableStaticWebAssets>
+    <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,13 +27,15 @@
     <PackageReference Include="TRNSPRNT.NFC" Version="1.2.0" />
 
     <!-- Ethereum -->
-    <PackageReference Include="Nethereum.Web3" Version="4.3.0" />
+    <PackageReference Include="Nethereum.Web3" Version="4.12.0" />
+    <PackageReference Include="Nethereum.Signer" Version="4.12.0" />
+    <PackageReference Include="Nethereum.KeyStore" Version="4.12.0" />
 
     <!-- MSAL 最新版で脆弱性回避 -->
     <PackageReference Include="Microsoft.Identity.Client" Version="4.72.1" />
 
     <!-- BouncyCastle をバージョン固定して警告解消 -->
-    <PackageReference Update="Portable.BouncyCastle" Version="1.8.10" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 
     <!-- OTP & QR -->
     <PackageReference Include="Otp.NET" Version="1.4.0" />
@@ -41,4 +44,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="Plugin.Fingerprint" Version="2.1.5" />
   </ItemGroup>
+
+  <ItemGroup>
+    <MauiIcon Include="Platforms\**\AppIcon.png" ForegroundFile="Platforms\**\appicon_foreground.svg" Color="#512BD4" />
+    <MauiSplashScreen Include="Platforms\**\Splash.png" Color="#512BD4" BaseSize="128,128" />
+  </ItemGroup>
+
 </Project>

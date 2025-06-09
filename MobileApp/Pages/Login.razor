@@ -2,11 +2,11 @@
 @using JPYCOffline.ViewModels
 @inject LoginViewModel VM
 
-<VerticalStackLayout Padding="30">
-    <Label Text="JPYC Wallet Login" FontSize="24" HorizontalOptions="Center" />
-    <Entry Placeholder="Username" @bind-Text="VM.Username" />
-    <Entry Placeholder="Password" IsPassword="true" @bind-Text="VM.Password" />
-    <Button Text="Sign In" OnClick="@VM.OnSignInAsync" />
-    <Button Text="Sign Up" OnClick='@(() => Shell.Current.GoToAsync("/signup"))' />
-    <Button Text="Use Passcode" OnClick='@(() => Shell.Current.GoToAsync("/passcode"))' />
-</VerticalStackLayout>
+<div style="padding: 30px;">
+    <h1 style="font-size: 24px; text-align: center;">JPYC Wallet Login</h1>
+    <input placeholder="Username" @bind-value="VM.Username" />
+    <input placeholder="Password" type="password" @bind-value="VM.Password" />
+    <button @onclick="@VM.OnSignInAsync">Sign In</button>
+    <button @onclick='@(() => Shell.Current.GoToAsync("/signup"))'>Sign Up</button>
+    <button @onclick='@(() => Shell.Current.GoToAsync("/passcode"))'>Use Passcode</button>
+</div>

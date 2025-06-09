@@ -1,23 +1,32 @@
 @page "/settings"
 @inject IAuthenticatorService Auth
 
+<div style="padding: 30px;">
+    <h1 style="font-size: 24px;">Settings</h1>
+    <input placeholder="New Passcode" type="password" @bind-value="passcode" />
+    <button @onclick="SavePasscode">Save Passcode</button>
+    <button @onclick="RegisterBio">Test Biometric</button>
+</div>
+
 @code {
     string passcode = "";
+
     async Task SavePasscode()
     {
         await SecureStorage.Default.SetAsync("passcode", passcode);
         await Shell.Current.DisplayAlert("Saved", "Passcode set", "OK");
     }
+
     async Task RegisterBio()
     {
-        if (await Auth.AuthenticateAsync())
-            await Shell.Current.DisplayAlert("Registered", "Biometric enabled", "OK");
+        var ok = await Auth.AuthenticateAsync();
+        if (ok)
+        {
+            await Shell.Current.DisplayAlert("Success", "Biometric authentication successful", "OK");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "Biometric authentication failed", "OK");
+        }
     }
 }
-
-<VerticalStackLayout Padding="30">
-    <Label Text="Settings" FontSize="24" />
-    <Entry Placeholder="New Passcode" IsPassword="true" Text="@passcode" />
-    <Button Text="Save Passcode" OnClick="SavePasscode" />
-    <Button Text="Register Biometric" OnClick="RegisterBio" />
-</VerticalStackLayout>

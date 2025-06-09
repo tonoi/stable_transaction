@@ -2,13 +2,13 @@
 @using JPYCOffline.Services
 @inject WalletService WalletSvc
 
-<VerticalStackLayout Padding="20">
-    <Label Text="Balance" FontSize="22"/>
-    <Label Text="@($"{WalletSvc.Balance} JPYC")" FontSize="36" FontAttributes="Bold"/>
+<div style="padding: 20px;">
+    <h2 style="font-size: 22px;">Balance</h2>
+    <h1 style="font-size: 36px; font-weight: bold;">@($"{WalletSvc.Balance} JPYC")</h1>
 
-    <Button Text="Send (Offline)" OnClick="SendOffline"/>
-    <Button Text="Settings" OnClick='@(() => Shell.Current.GoToAsync("/settings"))' />
-</VerticalStackLayout>
+    <button @onclick="SendOffline">Send (Offline)</button>
+    <button @onclick='@(() => Shell.Current.GoToAsync("/settings"))'>Settings</button>
+</div>
 
 @code {
     async Task SendOffline()
