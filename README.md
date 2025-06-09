@@ -53,6 +53,7 @@ PRIVATE_KEY="0x012345..."
 
 These values configure Cosmos DB, the storage queue and Polygon contract used by
 `RedeemBundleApi` and `RedeemOrchestrator`.
+For details on obtaining API keys and setting these variables, see **docs/jpyc-connection.md**.
 
 ### User Authentication
 
