@@ -68,7 +68,7 @@ PRIVATE_KEY="0x012345..."
 OTP と QR の依存パッケージを追加します:
 
 ```xml
-<PackageReference Include="Otp.NET" Version="2.0.5" />
+<PackageReference Include="Otp.NET" Version="1.4.0" />
 <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 ```
 
