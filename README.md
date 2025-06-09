@@ -88,3 +88,4 @@ var totp = await AuthenticatorService.GenerateTotpAsync("Example", "alice");
 ```
 
 > See **docs/architecture.md** for more detail.
+
