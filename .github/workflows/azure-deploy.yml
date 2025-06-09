@@ -1,8 +1,16 @@
 name: Deploy Azure Functions
 
 on:
-  push:
-    branches: [main]
+  workflow_call:
+    secrets:
+      OFFLINE_FUNCTIONAPP_NAME:
+        required: true
+      OFFLINE_FUNCTIONAPP_PUBLISH_PROFILE:
+        required: true
+      REDEEM_FUNCTIONAPP_NAME:
+        required: true
+      REDEEM_FUNCTIONAPP_PUBLISH_PROFILE:
+        required: true
   workflow_dispatch:
 
 jobs:
