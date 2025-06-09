@@ -8,28 +8,35 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET MAUI
+      uses: weslleymurdock/setup-maui-action@v1.1
       with:
-        distribution: 'temurin'
-        java-version: '17'
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore MobileApp/MobileApp.csproj
+
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      run: dotnet publish MobileApp/MobileApp.csproj -c Debug -f net8.0-android /p:AndroidPackageFormat=apk
+
     - name: Build Release Bundle
-      run: ./gradlew bundleRelease --stacktrace
+      run: dotnet publish MobileApp/MobileApp.csproj -c Release -f net8.0-android /p:AndroidPackageFormat=aab
+
     - name: Upload Debug APK
       if: success()
       uses: actions/upload-artifact@v3
       with:
         name: app-debug-apk
-        path: app/build/outputs/apk/debug/*.apk
+        path: MobileApp/bin/Debug/net8.0-android/publish/*.apk
+
     - name: Upload Release AAB
       if: success()
       uses: actions/upload-artifact@v3
       with:
         name: app-release-aab
-        path: app/build/outputs/bundle/release/*.aab
+        path: MobileApp/bin/Release/net8.0-android/publish/*.aab
