@@ -28,6 +28,7 @@ jobs:
               - '.github/workflows/android_build.yml'
             azure:
               - 'Backend/**'
+              - '.github/workflows/azure-test.yml'
               - '.github/workflows/azure-deploy.yml'
   ci:
     needs: filter
@@ -37,9 +38,14 @@ jobs:
     needs: filter
     if: needs.filter.outputs.android == 'true'
     uses: ./.github/workflows/android_build.yml
-  azure:
+  azure-test:
     needs: filter
     if: needs.filter.outputs.azure == 'true'
+    uses: ./.github/workflows/azure-test.yml
+
+  azure-deploy:
+    needs: azure-test
+    if: github.event_name == 'push' && needs.filter.outputs.azure == 'true'
     uses: ./.github/workflows/azure-deploy.yml
     secrets:
       OFFLINE_FUNCTIONAPP_NAME: ${{ secrets.OFFLINE_FUNCTIONAPP_NAME }}
