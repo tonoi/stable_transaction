@@ -104,8 +104,9 @@ public class AuthenticatorService : IAuthenticatorService
         string secret;
         lock (_lock)
         {
-            if (!_accounts.TryGetValue(Key(issuer, accountName), out secret))
+            if (!_accounts.TryGetValue(Key(issuer, accountName), out var s))
                 throw new InvalidOperationException("Account not found");
+            secret = s;
         }
         var totp = new Totp(Base32Encoding.ToBytes(secret));
         return totp.ComputeTotp(DateTime.UtcNow);
