@@ -1,0 +1,325 @@
+@page "/create-alarm"
+@using JapanTravelApp.Services
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+
+<div class="alarm-container">
+    <div class="alarm-card">
+        <h2>@AppResources.CreateAlarm</h2>
+        
+        <div class="alarm-form">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" @bind="alarmTitle" class="form-control" placeholder="Enter alarm title" />
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" @bind="alarmMessage" class="form-control" rows="3" placeholder="Enter alarm message"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" @bind="alarmDate" @bind:format="yyyy-MM-dd" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" @bind="alarmTime" @bind:format="HH:mm" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" @bind="isRepeating" />
+                    Repeat Daily
+                </label>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" @onclick="CreateAlarmAsync" disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                    }
+                    Create Alarm
+                </button>
+                <button class="btn btn-secondary" @onclick="GoBack">Cancel</button>
+            </div>
+        </div>
+        
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div class="alert @(isSuccess ? "alert-success" : "alert-danger")">@message</div>
+        }
+        
+        @if (activeAlarms.Any())
+        {
+            <div class="active-alarms">
+                <h3>Active Alarms</h3>
+                @foreach (var alarm in activeAlarms)
+                {
+                    <div class="alarm-item">
+                        <div class="alarm-info">
+                            <h4>@alarm.Title</h4>
+                            <p>@alarm.Message</p>
+                            <p><strong>Time:</strong> @alarm.ScheduledTime.ToString("yyyy/MM/dd HH:mm")</p>
+                            <p><strong>Repeating:</strong> @(alarm.IsRepeating ? "Yes" : "No")</p>
+                        </div>
+                        <button class="btn btn-danger btn-sm" @onclick="() => CancelAlarm(alarm.Id)">Cancel</button>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string alarmTitle = "";
+    private string alarmMessage = "";
+    private DateTime alarmDate = DateTime.Today;
+    private TimeOnly alarmTime = TimeOnly.FromDateTime(DateTime.Now.AddHours(1));
+    private bool isRepeating = false;
+    private bool isLoading = false;
+    private string message = "";
+    private bool isSuccess = false;
+    private List<AlarmModel> activeAlarms = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadActiveAlarms();
+        await RequestNotificationPermission();
+    }
+
+    private async Task RequestNotificationPermission()
+    {
+        await NotificationService.RequestPermissionAsync();
+    }
+
+    private async Task LoadActiveAlarms()
+    {
+        activeAlarms = await NotificationService.GetActiveAlarmsAsync();
+    }
+
+    private async Task CreateAlarmAsync()
+    {
+        if (string.IsNullOrWhiteSpace(alarmTitle) || string.IsNullOrWhiteSpace(alarmMessage))
+        {
+            message = "Please fill in all required fields";
+            isSuccess = false;
+            return;
+        }
+
+        isLoading = true;
+        message = "";
+
+        try
+        {
+            var scheduledDateTime = alarmDate.Date.Add(alarmTime.ToTimeSpan());
+            
+            if (scheduledDateTime <= DateTime.Now)
+            {
+                message = "Please select a future date and time";
+                isSuccess = false;
+                return;
+            }
+
+            var alarm = new AlarmModel
+            {
+                Title = alarmTitle,
+                Message = alarmMessage,
+                ScheduledTime = scheduledDateTime,
+                IsRepeating = isRepeating
+            };
+
+            var success = await NotificationService.ScheduleAlarmAsync(alarm);
+            
+            if (success)
+            {
+                message = "Alarm created successfully!";
+                isSuccess = true;
+                
+                // Clear form
+                alarmTitle = "";
+                alarmMessage = "";
+                alarmDate = DateTime.Today;
+                alarmTime = TimeOnly.FromDateTime(DateTime.Now.AddHours(1));
+                isRepeating = false;
+                
+                await LoadActiveAlarms();
+            }
+            else
+            {
+                message = "Failed to create alarm";
+                isSuccess = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"Error: {ex.Message}";
+            isSuccess = false;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task CancelAlarm(int alarmId)
+    {
+        var success = await NotificationService.CancelAlarmAsync(alarmId);
+        if (success)
+        {
+            await LoadActiveAlarms();
+            message = "Alarm cancelled successfully";
+            isSuccess = true;
+        }
+        else
+        {
+            message = "Failed to cancel alarm";
+            isSuccess = false;
+        }
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+}
+
+<style>
+    .alarm-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+        padding: 2rem 1rem;
+    }
+
+    .alarm-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .alarm-form {
+        margin-top: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-sm {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .alert {
+        padding: 0.75rem;
+        margin-top: 1rem;
+        border-radius: 5px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .active-alarms {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+
+    .alarm-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+    }
+
+    .alarm-info h4 {
+        margin: 0 0 0.5rem 0;
+        color: #333;
+    }
+
+    .alarm-info p {
+        margin: 0.25rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        border: 0.125em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+    }
+
+    .spinner-border-sm {
+        width: 0.875rem;
+        height: 0.875rem;
+        border-width: 0.125em;
+    }
+</style> 

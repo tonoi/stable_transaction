@@ -1,0 +1,432 @@
+@page "/guide"
+@using JapanTravelApp.Services
+@inject ITourService TourService
+@inject IAuthenticationService AuthService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="guide-container">
+    <div class="guide-header">
+        <h1>@AppResources.MyTours</h1>
+        <p class="subtitle">あなたの予約済みツアー / Your Booked Tours</p>
+    </div>
+
+    <!-- Map Section for Yosano, Kyoto -->
+    <div class="map-section">
+        <div class="map-header">
+            <h2>京都府与謝野町 / Yosano, Kyoto</h2>
+            <p>ガイドエリアの地図 / Guide Area Map</p>
+        </div>
+        <div id="guide-map" class="map-container"></div>
+    </div>
+
+    <div class="guide-content">
+        @if (myTours.Any())
+        {
+            <div class="tours-grid">
+                @foreach (var tour in myTours)
+                {
+                    <div class="tour-card">
+                        <div class="tour-image">
+                            <i class="bi bi-geo-alt-fill location-icon"></i>
+                        </div>
+                        <div class="tour-details">
+                            <h3>@tour.Title</h3>
+                            <p class="description">@tour.Description</p>
+                            <div class="tour-info">
+                                <div class="info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span><strong>場所 / Location:</strong> @tour.Location</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-currency-yen"></i>
+                                    <span><strong>料金 / Price:</strong> ¥@tour.Price</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="bi bi-calendar"></i>
+                                    <span><strong>日程 / Date:</strong> @tour.Date.ToString("yyyy年MM月dd日 / yyyy/MM/dd")</span>
+                                </div>
+                            </div>
+                            <div class="tour-actions">
+                                <button class="btn btn-secondary" @onclick="() => ViewDetails(tour)">
+                                    <i class="bi bi-info-circle"></i>
+                                    詳細 / Details
+                                </button>
+                                <button class="btn btn-danger" @onclick="() => CancelTour(tour.Id)">
+                                    <i class="bi bi-x-circle"></i>
+                                    キャンセル / Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <i class="bi bi-suitcase2"></i>
+                <h3>まだツアーの予約がありません / No Tours Booked Yet</h3>
+                <p>新しいツアーを探してみませんか？ / Would you like to explore new tours?</p>
+                <button class="btn btn-primary" @onclick="NavigateToTours">
+                    <i class="bi bi-search"></i>
+                    ツアーを探す / Find Tours
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="back-button-container">
+        <button class="btn btn-secondary" @onclick="GoBack">
+            <i class="bi bi-arrow-left"></i>
+            ダッシュボードに戻る / Back to Dashboard
+        </button>
+    </div>
+</div>
+
+@code {
+    private List<Tour> myTours = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var isAuthenticated = await AuthService.IsAuthenticatedAsync();
+        if (!isAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        await LoadMyTours();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await InitializeMap();
+        }
+    }
+
+    private async Task InitializeMap()
+    {
+        try
+        {
+            // Yosano, Kyoto coordinates: 35.4847, 135.1308
+            await JSRuntime.InvokeVoidAsync("leafletMaps.initializeMap", 
+                "guide-map", 35.4847, 135.1308, "京都府与謝野町 / Yosano, Kyoto", 12);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing map: {ex.Message}");
+        }
+    }
+
+    private async Task LoadMyTours()
+    {
+        myTours = await TourService.GetMyToursAsync();
+    }
+
+    private void ViewDetails(Tour tour)
+    {
+        // Navigate to tour details page
+        Navigation.NavigateTo($"/tour-details/{tour.Id}");
+    }
+
+    private async Task CancelTour(string tourId)
+    {
+        var success = await TourService.CancelTourAsync(tourId);
+        if (success)
+        {
+            await LoadMyTours();
+            // TODO: Show success message
+        }
+        else
+        {
+            // TODO: Show error message
+        }
+    }
+
+    private void NavigateToTours()
+    {
+        Navigation.NavigateTo("/tours");
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("leafletMaps.destroyMap", "guide-map");
+        }
+        catch (Exception)
+        {
+            // Ignore disposal errors
+        }
+    }
+}
+
+<style>
+    .guide-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        padding-bottom: 100px; /* Space for floating profile icon */
+    }
+
+    .guide-header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .guide-header h1 {
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .subtitle {
+        color: #666;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .map-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2rem;
+    }
+
+    .map-header {
+        padding: 2rem 2rem 1rem 2rem;
+        text-align: center;
+    }
+
+    .map-header h2 {
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .map-header p {
+        color: #666;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .map-container {
+        height: 400px;
+        width: 100%;
+        border-top: 1px solid #eee;
+    }
+
+    .guide-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .tours-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .tour-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .tour-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .tour-image {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .location-icon {
+        font-size: 3rem;
+        color: white;
+        opacity: 0.8;
+    }
+
+    .tour-details {
+        padding: 2rem;
+    }
+
+    .tour-details h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    .description {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .tour-info {
+        margin-bottom: 2rem;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        padding: 0.75rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .info-item i {
+        color: #007bff;
+        font-size: 1.1rem;
+        min-width: 16px;
+    }
+
+    .info-item span {
+        color: #555;
+        font-size: 0.95rem;
+    }
+
+    .tour-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+        justify-content: center;
+        min-width: 120px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108,117,125,0.3);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220,53,69,0.3);
+    }
+
+    .empty-state {
+        background: white;
+        text-align: center;
+        padding: 4rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #dee2e6;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .empty-state p {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .back-button-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .guide-container {
+            padding: 1rem;
+        }
+
+        .tours-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .guide-header h1 {
+            font-size: 2rem;
+        }
+
+        .map-container {
+            height: 300px;
+        }
+
+        .tour-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            flex: none;
+        }
+    }
+</style> 
