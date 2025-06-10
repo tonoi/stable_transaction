@@ -1,7 +1,119 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
+@using JPYCOffline.Services.Travel
+@inject IAuthenticationService AuthService
+@inject NavigationManager Navigation
 
 <div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
     <main>
-        @Body
+        <div class="top-row px-4">
+            <a href="https://tonoi.co.jp" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+        
+        <!-- User Profile Icon in bottom right -->
+        <div class="user-profile-icon" @onclick="ToggleProfileMenu">
+            <i class="bi bi-person-circle"></i>
+            @if (showProfileMenu)
+            {
+                <div class="profile-popup">
+                    <div class="profile-menu-item" @onclick="NavigateToAccountSettings">
+                        <i class="bi bi-gear"></i> @AppResources.AccountSettings
+                    </div>
+                    <div class="profile-menu-item" @onclick="Logout">
+                        <i class="bi bi-box-arrow-right"></i> @AppResources.Logout
+                    </div>
+                </div>
+            }
+        </div>
     </main>
-</div> 
+</div>
+
+@code {
+    private bool showProfileMenu = false;
+
+    private void ToggleProfileMenu()
+    {
+        showProfileMenu = !showProfileMenu;
+    }
+
+    private async Task Logout()
+    {
+        showProfileMenu = false;
+        await AuthService.LogoutAsync();
+        Navigation.NavigateTo("/login");
+    }
+
+    private void NavigateToAccountSettings()
+    {
+        showProfileMenu = false;
+        Navigation.NavigateTo("/account-settings");
+    }
+}
+
+<style>
+    .user-profile-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .user-profile-icon:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+    }
+
+    .user-profile-icon i {
+        font-size: 24px;
+        color: white;
+    }
+
+    .profile-popup {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        min-width: 180px;
+        padding: 8px 0;
+        z-index: 1001;
+    }
+
+    .profile-menu-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #333;
+        font-size: 14px;
+        transition: background-color 0.2s ease;
+    }
+
+    .profile-menu-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .profile-menu-item i {
+        font-size: 16px;
+        color: #666;
+    }
+</style>

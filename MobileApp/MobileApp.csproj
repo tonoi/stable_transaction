@@ -43,11 +43,22 @@
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="Plugin.Fingerprint" Version="2.1.5" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+    <PackageReference Include="Plugin.LocalNotification" Version="12.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <MauiIcon Include="Platforms\**\AppIcon.png" ForegroundFile="Platforms\**\appicon_foreground.svg" Color="#512BD4" />
     <MauiSplashScreen Include="Platforms\**\Splash.png" Color="#512BD4" BaseSize="128,128" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Localizations\AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
