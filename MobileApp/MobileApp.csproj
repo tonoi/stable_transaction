@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>
-      net9.0-android;net9.0-ios;net9.0-maccatalyst
+      net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0
     </TargetFrameworks>
     <RootNamespace>JPYCOffline</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -15,10 +15,16 @@
     <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- UI ランタイム -->
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.70" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.100" />
 
     <!-- Web3／WalletConnect -->
     <PackageReference Include="WalletConnect.Core" Version="2.4.3" />
@@ -41,11 +47,14 @@
     <PackageReference Include="Otp.NET" Version="1.4.0" />
     <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Plugin.Fingerprint" Version="2.1.5" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
     <PackageReference Include="Plugin.LocalNotification" Version="12.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
+    <PackageReference Include="Microsoft.JSInterop" Version="8.0.10" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +68,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Localizations\AppResources.resx" />
+    <EmbeddedResource Include="Resources\Localizations\AppResources.ja.resx" />
+    <EmbeddedResource Include="Resources\Localizations\AppResources.ko.resx" />
+    <EmbeddedResource Include="Resources\Localizations\AppResources.fr.resx" />
   </ItemGroup>
 
 </Project>

@@ -34,7 +34,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
         builder.Services.AddSingleton<ITourService, TourService>();
         builder.Services.AddSingleton<JPYCOffline.Services.Travel.IWalletService, JPYCOffline.Services.Travel.WalletService>();
-        builder.Services.AddSingleton<INotificationService, NotificationService>();
+        builder.Services.AddSingleton<JPYCOffline.Services.Travel.INotificationService, JPYCOffline.Services.Travel.NotificationService>();
         builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 #if DEBUG
