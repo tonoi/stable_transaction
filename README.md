@@ -15,7 +15,7 @@
 ## Build
 
 ```bash
-# .NET 9 と Node 20 が必要
+# .NET 8 と Node 20 が必要
 dotnet restore
 dotnet build MobileApp/MobileApp.csproj -t:Run
 ```

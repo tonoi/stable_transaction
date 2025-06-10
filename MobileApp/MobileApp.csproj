@@ -31,7 +31,7 @@
     <!-- Web3／WalletConnect -->
     <PackageReference Include="WalletConnect.Core" Version="2.4.3" />
 
-    <!-- NFC 代替プラグイン (.NET 9 対応) -->
+    <!-- NFC 代替プラグイン (.NET 8 対応) -->
     <PackageReference Include="TRNSPRNT.NFC" Version="1.2.0" />
 
     <!-- Ethereum -->
