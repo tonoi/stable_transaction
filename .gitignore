@@ -10,3 +10,4 @@ lib/
 out/
 cache/
 __pycache__/
+.vs/
