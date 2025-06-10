@@ -13,4 +13,11 @@
     <ShellContent Route="biometric" ContentTemplate="{DataTemplate pages:BiometricAuth}" />
     <ShellContent Route="merchant" ContentTemplate="{DataTemplate pages:MerchantPos}" />
     <ShellContent Route="auth-accounts" ContentTemplate="{DataTemplate pages:AuthenticatorAccounts}" />
+    <ShellContent Route="dashboard" ContentTemplate="{DataTemplate pages:Dashboard}" />
+    <ShellContent Route="guide" ContentTemplate="{DataTemplate pages:Guide}" />
+    <ShellContent Route="tours" ContentTemplate="{DataTemplate pages:Tours}" />
+    <ShellContent Route="travel-wallet" ContentTemplate="{DataTemplate pages:TravelWallet}" />
+    <ShellContent Route="travel-settings" ContentTemplate="{DataTemplate pages:TravelSettings}" />
+    <ShellContent Route="account-settings" ContentTemplate="{DataTemplate pages:AccountSettings}" />
+    <ShellContent Route="create-alarm" ContentTemplate="{DataTemplate pages:CreateAlarm}" />
 </Shell>

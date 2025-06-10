@@ -1,6 +1,6 @@
 namespace JPYCOffline.Services;
 
-public class WalletService
+public class OfflineWalletService
 {
     public decimal Balance { get; private set; } = 0m;
 

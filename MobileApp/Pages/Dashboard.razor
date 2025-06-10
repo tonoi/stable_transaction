@@ -1,0 +1,329 @@
+@page "/dashboard"
+@using JPYCOffline.Services.Travel
+@inject ITourService TourService
+@inject IWalletService WalletService
+@inject IAuthenticationService AuthService
+@inject NavigationManager Navigation
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>@AppResources.Dashboard</h1>
+            <p class="welcome-message">日本へようこそ！ / Welcome to Japan!</p>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main class="dashboard-content">
+        <div class="dashboard-grid">
+            <div class="card tours-card" @onclick="NavigateToGuide">
+                <div class="card-icon">
+                    <i class="bi bi-map"></i>
+                </div>
+                <h3>@AppResources.MyTours</h3>
+                <p>@myTours.Count tours booked</p>
+                <p class="card-subtitle">予約済みツアーを確認 / View your booked tours</p>
+            </div>
+            
+            <div class="card recommendations-card" @onclick="NavigateToTours">
+                <div class="card-icon">
+                    <i class="bi bi-geo-alt"></i>
+                </div>
+                <h3>@AppResources.RecommendedTours</h3>
+                <p>@recommendedTours.Count new recommendations</p>
+                <p class="card-subtitle">おすすめツアーを探索 / Explore recommended tours</p>
+            </div>
+            
+            <div class="card wallet-card" @onclick="NavigateToWallet">
+                <div class="card-icon">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+                <h3>@AppResources.Wallet</h3>
+                <p>@walletAccounts.Count(a => a.IsConnected) connected accounts</p>
+                <p class="card-subtitle">決済アカウント管理 / Manage payment accounts</p>
+            </div>
+            
+            <div class="card info-card">
+                <div class="card-icon">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+                <h3>@AppResources.RecommendedInfo</h3>
+                <div class="info-section">
+                    <h4>@AppResources.Weather</h4>
+                    <p>Tokyo: 22°C, Sunny ☀️</p>
+                </div>
+                <div class="info-section">
+                    <h4>@AppResources.News</h4>
+                    <p>Cherry blossom season starting soon! 🌸</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>クイックアクション / Quick Actions</h3>
+            <div class="action-buttons">
+                <button class="btn btn-primary" @onclick="NavigateToCreateAlarm">
+                    <i class="bi bi-alarm"></i>
+                    @AppResources.CreateAlarm
+                </button>
+                <button class="btn btn-secondary" @onclick="NavigateToSettings">
+                    <i class="bi bi-gear"></i>
+                    @AppResources.Settings
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    private List<Tour> myTours = new();
+    private List<Tour> recommendedTours = new();
+    private List<WalletAccount> walletAccounts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var isAuthenticated = await AuthService.IsAuthenticatedAsync();
+        if (!isAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        myTours = await TourService.GetMyToursAsync();
+        recommendedTours = await TourService.GetRecommendedToursAsync();
+        walletAccounts = await WalletService.GetAccountsAsync();
+    }
+
+    private void NavigateToGuide()
+    {
+        Navigation.NavigateTo("/guide");
+    }
+
+    private void NavigateToTours()
+    {
+        Navigation.NavigateTo("/tours");
+    }
+
+    private void NavigateToWallet()
+    {
+        Navigation.NavigateTo("/wallet");
+    }
+
+    private void NavigateToSettings()
+    {
+        Navigation.NavigateTo("/settings");
+    }
+
+    private void NavigateToCreateAlarm()
+    {
+        Navigation.NavigateTo("/create-alarm");
+    }
+}
+
+<style>
+    .dashboard-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding-bottom: 80px; /* Space for floating profile icon */
+    }
+
+    .dashboard-header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    .header-content h1 {
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .welcome-message {
+        color: #666;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .dashboard-content {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .card-icon {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+        opacity: 0.3;
+    }
+
+    .tours-card .card-icon {
+        color: #28a745;
+    }
+
+    .recommendations-card .card-icon {
+        color: #007bff;
+    }
+
+    .wallet-card .card-icon {
+        color: #ffc107;
+    }
+
+    .info-card .card-icon {
+        color: #17a2b8;
+    }
+
+    .card h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+    }
+
+    .card p {
+        color: #666;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .card-subtitle {
+        font-size: 0.9rem !important;
+        color: #999 !important;
+        font-style: italic;
+    }
+
+    .info-section {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .info-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info-section h4 {
+        color: #007bff;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .quick-actions {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .quick-actions h3 {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108,117,125,0.3);
+    }
+
+    .back-button-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .dashboard-content {
+            padding: 1rem;
+        }
+
+        .header-content h1 {
+            font-size: 2rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style> 

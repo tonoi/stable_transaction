@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Authentication -->
+  <data name="Login" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="BiometricAuth" xml:space="preserve">
+    <value>生体認証</value>
+  </data>
+  <data name="Passcode" xml:space="preserve">
+    <value>パスコード</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>アカウント設定</value>
+  </data>
+  
+  <!-- Navigation -->
+  <data name="Dashboard" xml:space="preserve">
+    <value>ダッシュボード</value>
+  </data>
+  <data name="Guide" xml:space="preserve">
+    <value>ガイド</value>
+  </data>
+  <data name="Tours" xml:space="preserve">
+    <value>ツアー</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>ウォレット</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  
+  <!-- Dashboard -->
+  <data name="MyTours" xml:space="preserve">
+    <value>マイツアー</value>
+  </data>
+  <data name="RecommendedTours" xml:space="preserve">
+    <value>おすすめツアー</value>
+  </data>
+  <data name="RecommendedInfo" xml:space="preserve">
+    <value>おすすめ情報</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>天気</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>時事情報</value>
+  </data>
+  
+  <!-- Wallet -->
+  <data name="Accounts" xml:space="preserve">
+    <value>アカウント一覧</value>
+  </data>
+  <data name="MyNumberCard" xml:space="preserve">
+    <value>マイナンバーカード</value>
+  </data>
+  <data name="SuicaCard" xml:space="preserve">
+    <value>Suica</value>
+  </data>
+  <data name="GoogleAccount" xml:space="preserve">
+    <value>Googleアカウント</value>
+  </data>
+  <data name="MSAccount" xml:space="preserve">
+    <value>Microsoftアカウント</value>
+  </data>
+  
+  <!-- Settings -->
+  <data name="Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="CreateAlarm" xml:space="preserve">
+    <value>アラーム作成</value>
+  </data>
+  
+  <!-- General -->
+  <data name="WelcomeToJapan" xml:space="preserve">
+    <value>日本へようこそ</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>地図</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>決済</value>
+  </data>
+</root> 
