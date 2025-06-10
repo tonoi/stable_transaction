@@ -13,6 +13,8 @@
     <!-- Razor SDK が静的アセット用ターゲットを追加する -->
     <EnableStaticWebAssets>true</EnableStaticWebAssets>
     <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
+    <Configurations>Debug;Release;MSIX</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
