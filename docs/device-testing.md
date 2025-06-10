@@ -1,7 +1,7 @@
 # Device Testing Guide
 
 ## Android Studio でビルド
-1. .NET 9 SDK と MAUI Android ワークロードをインストールします。
+1. .NET 8 SDK と MAUI Android ワークロードをインストールします。
    ```bash
    dotnet workload install maui-android
    ```
@@ -9,21 +9,21 @@
 3. `Run` ボタンを押すと、接続済みデバイスまたはエミュレーター上でアプリがビルドされます。
    CLI から実行する場合は次を使用します。
    ```bash
-   dotnet build MobileApp/MobileApp.csproj -t:Run -f net9.0-android
+   dotnet build MobileApp/MobileApp.csproj -t:Run -f net8.0-android
    ```
 
 ## Xcode でビルド
-1. macOS 上で .NET 9 SDK と MAUI iOS ワークロードをインストールします。
+1. macOS 上で .NET 8 SDK と MAUI iOS ワークロードをインストールします。
    ```bash
    dotnet workload install maui-ios
    ```
 2. ターミナルで iOS ビルドを生成します。
    ```bash
-   dotnet build MobileApp/MobileApp.csproj -f net9.0-ios
+   dotnet build MobileApp/MobileApp.csproj -f net8.0-ios
    ```
-3. 生成された `bin/Debug/net9.0-ios` 内の `.app` を Xcode の Simulator で開きます。
+3. 生成された `bin/Debug/net8.0-ios` 内の `.app` を Xcode の Simulator で開きます。
    ```bash
-   open bin/Debug/net9.0-ios/iossimulator/MobileApp.app
+   open bin/Debug/net8.0-ios/iossimulator/MobileApp.app
    ```
 
 ## 生体認証のテスト
