@@ -143,6 +143,56 @@
   <data name="CreateAlarm" xml:space="preserve">
     <value>Créer une alarme</value>
   </data>
+
+  <!-- Alarm Page -->
+  <data name="AlarmTitle" xml:space="preserve">
+    <value>Titre</value>
+  </data>
+  <data name="AlarmTitlePlaceholder" xml:space="preserve">
+    <value>Entrez le titre de l'alarme</value>
+  </data>
+  <data name="AlarmMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="AlarmMessagePlaceholder" xml:space="preserve">
+    <value>Saisissez le message de l'alarme</value>
+  </data>
+  <data name="AlarmDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="AlarmTime" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="RepeatDaily" xml:space="preserve">
+    <value>Répéter quotidiennement</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="ActiveAlarms" xml:space="preserve">
+    <value>Alarmes actives</value>
+  </data>
+  <data name="Repeating" xml:space="preserve">
+    <value>Répétition</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="EnterPasscode" xml:space="preserve">
+    <value>Entrez le code</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Créer un compte</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>S'inscrire</value>
+  </data>
   
   <!-- General -->
   <data name="WelcomeToJapan" xml:space="preserve">

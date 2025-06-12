@@ -143,6 +143,56 @@
   <data name="CreateAlarm" xml:space="preserve">
     <value>알람 생성</value>
   </data>
+
+  <!-- Alarm Page -->
+  <data name="AlarmTitle" xml:space="preserve">
+    <value>제목</value>
+  </data>
+  <data name="AlarmTitlePlaceholder" xml:space="preserve">
+    <value>알람 제목 입력</value>
+  </data>
+  <data name="AlarmMessage" xml:space="preserve">
+    <value>메시지</value>
+  </data>
+  <data name="AlarmMessagePlaceholder" xml:space="preserve">
+    <value>알람 메시지 입력</value>
+  </data>
+  <data name="AlarmDate" xml:space="preserve">
+    <value>날짜</value>
+  </data>
+  <data name="AlarmTime" xml:space="preserve">
+    <value>시간</value>
+  </data>
+  <data name="RepeatDaily" xml:space="preserve">
+    <value>매일 반복</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="ActiveAlarms" xml:space="preserve">
+    <value>활성 알람</value>
+  </data>
+  <data name="Repeating" xml:space="preserve">
+    <value>반복</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>예</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>아니오</value>
+  </data>
+  <data name="EnterPasscode" xml:space="preserve">
+    <value>암호 입력</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>제출</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>계정 만들기</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>가입하기</value>
+  </data>
   
   <!-- General -->
   <data name="WelcomeToJapan" xml:space="preserve">
