@@ -9,29 +9,29 @@
         
         <div class="alarm-form">
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" @bind="alarmTitle" class="form-control" placeholder="Enter alarm title" />
+                <label for="title">@AppResources.AlarmTitle</label>
+                <input type="text" id="title" @bind="alarmTitle" class="form-control" placeholder="@AppResources.AlarmTitlePlaceholder" />
             </div>
             
             <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" @bind="alarmMessage" class="form-control" rows="3" placeholder="Enter alarm message"></textarea>
+                <label for="message">@AppResources.AlarmMessage</label>
+                <textarea id="message" @bind="alarmMessage" class="form-control" rows="3" placeholder="@AppResources.AlarmMessagePlaceholder"></textarea>
             </div>
             
             <div class="form-group">
-                <label for="date">Date</label>
+                <label for="date">@AppResources.AlarmDate</label>
                 <input type="date" id="date" @bind="alarmDate" @bind:format="yyyy-MM-dd" class="form-control" />
             </div>
             
             <div class="form-group">
-                <label for="time">Time</label>
+                <label for="time">@AppResources.AlarmTime</label>
                 <input type="time" id="time" @bind="alarmTime" @bind:format="HH:mm" class="form-control" />
             </div>
             
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" @bind="isRepeating" />
-                    Repeat Daily
+                    @AppResources.RepeatDaily
                 </label>
             </div>
             
@@ -41,9 +41,9 @@
                     {
                         <span class="spinner-border spinner-border-sm" role="status"></span>
                     }
-                    Create Alarm
+                    @AppResources.CreateAlarm
                 </button>
-                <button class="btn btn-secondary" @onclick="GoBack">Cancel</button>
+                <button class="btn btn-secondary" @onclick="GoBack">@AppResources.Cancel</button>
             </div>
         </div>
         
@@ -55,17 +55,17 @@
         @if (activeAlarms.Any())
         {
             <div class="active-alarms">
-                <h3>Active Alarms</h3>
+                <h3>@AppResources.ActiveAlarms</h3>
                 @foreach (var alarm in activeAlarms)
                 {
                     <div class="alarm-item">
                         <div class="alarm-info">
                             <h4>@alarm.Title</h4>
                             <p>@alarm.Message</p>
-                            <p><strong>Time:</strong> @alarm.ScheduledTime.ToString("yyyy/MM/dd HH:mm")</p>
-                            <p><strong>Repeating:</strong> @(alarm.IsRepeating ? "Yes" : "No")</p>
+                            <p><strong>@AppResources.AlarmTime:</strong> @alarm.ScheduledTime.ToString("yyyy/MM/dd HH:mm")</p>
+                            <p><strong>@AppResources.Repeating:</strong> @(alarm.IsRepeating ? @AppResources.Yes : @AppResources.No)</p>
                         </div>
-                        <button class="btn btn-danger btn-sm" @onclick="() => CancelAlarm(alarm.Id)">Cancel</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => CancelAlarm(alarm.Id)">@AppResources.Cancel</button>
                     </div>
                 }
             </div>

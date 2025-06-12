@@ -1,9 +1,9 @@
 @page "/passcode"
 
 <div style="padding: 30px;">
-    <h1 style="font-size: 24px;">Enter Passcode</h1>
+    <h1 style="font-size: 24px;">@AppResources.EnterPasscode</h1>
     <input @bind-value="code" type="password" />
-    <button @onclick="@OnSubmit">Submit</button>
+    <button @onclick="@OnSubmit">@AppResources.Submit</button>
 </div>
 
 @code {

@@ -2,6 +2,7 @@
 @using JPYCOffline.Services.Travel
 @inject IAuthenticationService AuthService
 @inject NavigationManager Navigation
+@inject ILocalizationService LocalizationService
 
 <div class="page">
     <div class="sidebar">
@@ -23,6 +24,15 @@
             @if (showProfileMenu)
             {
                 <div class="profile-popup">
+                    <div class="profile-menu-item language-item">
+                        <i class="bi bi-translate"></i>
+                        <select @onchange="ChangeLanguage" value="@LocalizationService.GetCurrentCulture()" class="language-select">
+                            @foreach (var culture in LocalizationService.GetSupportedCultures())
+                            {
+                                <option value="@culture.Name">@culture.NativeName</option>
+                            }
+                        </select>
+                    </div>
                     <div class="profile-menu-item" @onclick="NavigateToAccountSettings">
                         <i class="bi bi-gear"></i> @AppResources.AccountSettings
                     </div>
@@ -54,6 +64,17 @@
     {
         showProfileMenu = false;
         Navigation.NavigateTo("/account-settings");
+    }
+
+    private void ChangeLanguage(ChangeEventArgs e)
+    {
+        var culture = e.Value?.ToString();
+        if (!string.IsNullOrEmpty(culture))
+        {
+            LocalizationService.SetCulture(culture);
+            showProfileMenu = false;
+            Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+        }
     }
 }
 
@@ -115,5 +136,13 @@
     .profile-menu-item i {
         font-size: 16px;
         color: #666;
+    }
+
+    .language-select {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 4px 8px;
+        font-size: 14px;
+        margin-left: auto;
     }
 </style>

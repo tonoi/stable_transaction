@@ -1,10 +1,10 @@
 @page "/signup"
 
 <div style="padding: 30px;">
-    <h1 style="font-size: 24px;">Create Account</h1>
-    <input placeholder="Username" @bind-value="username" />
-    <input placeholder="Password" type="password" @bind-value="password" />
-    <button @onclick="OnSubmit">Sign Up</button>
+    <h1 style="font-size: 24px;">@AppResources.CreateAccount</h1>
+    <input placeholder="@AppResources.Username" @bind-value="username" />
+    <input placeholder="@AppResources.Password" type="password" @bind-value="password" />
+    <button @onclick="OnSubmit">@AppResources.SignUp</button>
 </div>
 
 @code {
