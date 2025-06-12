@@ -279,6 +279,150 @@ namespace MobileApp.Resources.Localizations {
                 return ResourceManager.GetString("CreateAlarm", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string AlarmTitle {
+            get {
+                return ResourceManager.GetString("AlarmTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter alarm title.
+        /// </summary>
+        public static string AlarmTitlePlaceholder {
+            get {
+                return ResourceManager.GetString("AlarmTitlePlaceholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string AlarmMessage {
+            get {
+                return ResourceManager.GetString("AlarmMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter alarm message.
+        /// </summary>
+        public static string AlarmMessagePlaceholder {
+            get {
+                return ResourceManager.GetString("AlarmMessagePlaceholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string AlarmDate {
+            get {
+                return ResourceManager.GetString("AlarmDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string AlarmTime {
+            get {
+                return ResourceManager.GetString("AlarmTime", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat Daily.
+        /// </summary>
+        public static string RepeatDaily {
+            get {
+                return ResourceManager.GetString("RepeatDaily", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Active Alarms.
+        /// </summary>
+        public static string ActiveAlarms {
+            get {
+                return ResourceManager.GetString("ActiveAlarms", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Repeating.
+        /// </summary>
+        public static string Repeating {
+            get {
+                return ResourceManager.GetString("Repeating", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Passcode.
+        /// </summary>
+        public static string EnterPasscode {
+            get {
+                return ResourceManager.GetString("EnterPasscode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Create Account.
+        /// </summary>
+        public static string CreateAccount {
+            get {
+                return ResourceManager.GetString("CreateAccount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Up.
+        /// </summary>
+        public static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Welcome to Japan.
