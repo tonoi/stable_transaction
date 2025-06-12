@@ -72,11 +72,6 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Localizations\AppResources.resx" />
-    <EmbeddedResource Include="Resources\Localizations\AppResources.ja.resx" />
-    <EmbeddedResource Include="Resources\Localizations\AppResources.ko.resx" />
-    <EmbeddedResource Include="Resources\Localizations\AppResources.fr.resx" />
-  </ItemGroup>
+  <!-- EmbeddedResource files are included implicitly -->
 
 </Project>
