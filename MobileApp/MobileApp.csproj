@@ -25,7 +25,11 @@
     <BlazorWebViewDebuggingEnabled>true</BlazorWebViewDebuggingEnabled>
 
     <Configurations>Debug;Release;MSIX</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
+  <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
 
   <PropertyGroup>
