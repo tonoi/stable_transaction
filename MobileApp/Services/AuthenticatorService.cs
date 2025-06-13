@@ -4,7 +4,7 @@ using OtpNet;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 #endif
-namespace JPYCOffline.Services;
+namespace OfflineGuide.Services;
 
 public class AuthenticatorService : IAuthenticatorService
 {

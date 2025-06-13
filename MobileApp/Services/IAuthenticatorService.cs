@@ -1,4 +1,4 @@
-namespace JPYCOffline.Services;
+namespace OfflineGuide.Services;
 
 public record AuthenticatorAccount(string Issuer, string AccountName);
 

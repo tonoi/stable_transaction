@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MobileApp.Resources.Localizations {
+namespace OfflineGuide.Resources.Localizations {
     using System;
     
     /// <summary>

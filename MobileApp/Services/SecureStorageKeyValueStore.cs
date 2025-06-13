@@ -1,6 +1,6 @@
 using Microsoft.Maui.Storage;
 
-namespace JPYCOffline.Services;
+namespace OfflineGuide.Services;
 
 public class SecureStorageKeyValueStore : IKeyValueStore
 {

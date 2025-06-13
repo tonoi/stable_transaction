@@ -1,6 +1,6 @@
-global using JPYCOffline.Services;
-global using JPYCOffline.ViewModels;
-global using JPYCOffline.Pages;
+global using OfflineGuide.Services;
+global using OfflineGuide.ViewModels;
+global using OfflineGuide.Pages;
 global using Microsoft.Maui.Controls;
 global using Microsoft.Maui.Controls.Xaml;
 global using ZXing.Net.Maui;

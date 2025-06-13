@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Localization;
 using System.Globalization;
 
-namespace JPYCOffline.Services.Travel;
+namespace OfflineGuide.Services.Travel;
 
 public interface ILocalizationService
 {

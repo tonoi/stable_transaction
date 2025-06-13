@@ -1,6 +1,6 @@
 using Plugin.LocalNotification;
 
-namespace JPYCOffline.Services.Travel;
+namespace OfflineGuide.Services.Travel;
 
 public class AlarmModel
 {

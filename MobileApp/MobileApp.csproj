@@ -1,37 +1,45 @@
-<Project Sdk="Microsoft.NET.Sdk">   <!-- 変更点 -->
+<Project Sdk="Microsoft.NET.Sdk.Razor">   <!-- 変更点 -->
 
   <PropertyGroup>
     <TargetFrameworks>
-      net8.0-android;net8.0-ios;net8.0-maccatalyst
+      net8.0-android
     </TargetFrameworks>
-    <RootNamespace>JPYCOffline</RootNamespace>
+    <RootNamespace>OfflineGuide</RootNamespace>
     <UseMaui>true</UseMaui>
+    <OutputType>Exe</OutputType>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <EnableStaticWebAssets>false</EnableStaticWebAssets>
 
     <!-- Android設定 -->
-    <ApplicationId>com.jpyc.offline</ApplicationId>
+    <ApplicationId>co.jp.tonoi.offlineguide</ApplicationId>
     <ApplicationTitle>JPYC Offline</ApplicationTitle>
     <ApplicationVersion>1.0</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <VersionCode>1</VersionCode>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
     <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
 
-    <!-- Razor SDK が静的アセット用ターゲットを追加する -->
-    <!-- EnableStaticWebAssets>true</EnableStaticWebAssets> -->
     <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
     <Configurations>Debug;Release;MSIX</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Android 設定の追加 -->
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
+  </PropertyGroup>
 
   <ItemGroup>
     <!-- UI ランタイム -->
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.100" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
 
     <!-- Web3／WalletConnect -->
     <PackageReference Include="WalletConnect.Core" Version="2.4.3" />
@@ -52,6 +60,16 @@
 
     <!-- OTP & QR -->
     <PackageReference Include="Otp.NET" Version="1.4.0" />
+    <PackageReference Include="Xamarin.Android.Glide" Version="4.16.0.13" />
+    <PackageReference Include="Xamarin.Android.Glide.Annotations" Version="4.16.0.13" />
+    <PackageReference Include="Xamarin.Android.Glide.DiskLruCache" Version="4.16.0.13" />
+    <PackageReference Include="Xamarin.Android.Glide.GifDecoder" Version="4.16.0.13" />
+    <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.10.1.2" />
+    <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.10.1.2" />
+    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.9.1.4" />
+    <PackageReference Include="Xamarin.AndroidX.Annotation.Experimental" Version="1.4.1.10" />
+    <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.5.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.5.0.2" />
     <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -62,6 +80,21 @@
     <!-- <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" /> -->
     <!-- <PackageReference Include="Microsoft.JSInterop" Version="8.0.10" /> -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- AndroidX Lifecycle パッケージを最新バージョンに統一 -->
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 重複を避けるため、古いバージョンまたは互換性のないバージョンを除外 -->
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.8.7.4" ExcludeAssets="all" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime.Ktx" Version="2.8.7.4" ExcludeAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,6 +110,10 @@
     </Compile>
   </ItemGroup>
 
-  <!-- EmbeddedResource files are included implicitly -->
+  <ItemGroup>
+    <!-- AndroidX AppCompat パッケージ -->
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.7.0.7" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat.AppCompatResources" Version="1.7.0.7" />
+  </ItemGroup>
 
 </Project>

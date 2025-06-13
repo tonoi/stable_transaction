@@ -1,4 +1,4 @@
-namespace JPYCOffline.Services.Travel;
+namespace OfflineGuide.Services.Travel;
 
 public interface IAuthenticationService
 {

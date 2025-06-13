@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui;
-using JPYCOffline.Services;
+using OfflineGuide.Services;
 using CommunityToolkit.Maui;
 using Plugin.LocalNotification;
-using JPYCOffline.Services.Travel;
+using OfflineGuide.Services.Travel;
 
-namespace JPYCOffline;
+namespace OfflineGuide;
 
 public static class MauiProgram
 {
@@ -33,8 +33,8 @@ public static class MauiProgram
         builder.Services.AddLocalization();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
         builder.Services.AddSingleton<ITourService, TourService>();
-        builder.Services.AddSingleton<JPYCOffline.Services.Travel.IWalletService, JPYCOffline.Services.Travel.WalletService>();
-        builder.Services.AddSingleton<JPYCOffline.Services.Travel.INotificationService, JPYCOffline.Services.Travel.NotificationService>();
+        builder.Services.AddSingleton<OfflineGuide.Services.Travel.IWalletService, OfflineGuide.Services.Travel.WalletService>();
+        builder.Services.AddSingleton<OfflineGuide.Services.Travel.INotificationService, OfflineGuide.Services.Travel.NotificationService>();
         builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 #if DEBUG

@@ -1,4 +1,4 @@
-namespace JPYCOffline;
+namespace OfflineGuide;
 
 public partial class AppShell : Shell
 {

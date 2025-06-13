@@ -1,4 +1,4 @@
-namespace JPYCOffline.Services;
+namespace OfflineGuide.Services;
 
 public interface IKeyValueStore
 {

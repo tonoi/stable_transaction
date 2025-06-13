@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace JPYCOffline.Services;
+namespace OfflineGuide.Services;
 
 public class UserService
 {

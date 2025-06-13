@@ -1,7 +1,7 @@
 using System.ComponentModel;
-using JPYCOffline.Services;
+using OfflineGuide.Services;
 
-namespace JPYCOffline.ViewModels;
+namespace OfflineGuide.ViewModels;
 
 public class LoginViewModel : INotifyPropertyChanged
 {
