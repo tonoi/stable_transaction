@@ -1,16 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">   <!-- 変更点 -->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>
-      net8.0-android
-    </TargetFrameworks>
+    <TargetFrameworks>net8.0-android</TargetFrameworks>
     <RootNamespace>OfflineGuide</RootNamespace>
     <UseMaui>true</UseMaui>
     <OutputType>Exe</OutputType>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <EnableStaticWebAssets>false</EnableStaticWebAssets>
 
     <!-- Android設定 -->
     <ApplicationId>co.jp.tonoi.offlineguide</ApplicationId>
@@ -23,7 +20,10 @@
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
 
-    <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
+    <!-- Blazor設定 -->
+    <BlazorWebViewEnabled>true</BlazorWebViewEnabled>
+    <BlazorWebViewDebuggingEnabled>true</BlazorWebViewDebuggingEnabled>
+
     <Configurations>Debug;Release;MSIX</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
@@ -37,7 +37,6 @@
   <ItemGroup>
     <!-- UI ランタイム -->
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.100" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
 
@@ -77,8 +76,6 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
     <PackageReference Include="Plugin.LocalNotification" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
-    <!-- <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" /> -->
-    <!-- <PackageReference Include="Microsoft.JSInterop" Version="8.0.10" /> -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 

@@ -2,22 +2,8 @@
 <Shell
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:OfflineGuide.Pages"
     x:Class="OfflineGuide.AppShell">
 
-    <ShellContent Route="login" ContentTemplate="{DataTemplate pages:Login}" />
-    <ShellContent Route="signup" ContentTemplate="{DataTemplate pages:SignUp}" />
-    <ShellContent Route="passcode" ContentTemplate="{DataTemplate pages:Passcode}" />
-    <ShellContent Route="wallet" ContentTemplate="{DataTemplate pages:Wallet}" />
-    <ShellContent Route="settings" ContentTemplate="{DataTemplate pages:Settings}" />
-    <ShellContent Route="biometric" ContentTemplate="{DataTemplate pages:BiometricAuth}" />
-    <ShellContent Route="merchant" ContentTemplate="{DataTemplate pages:MerchantPos}" />
-    <ShellContent Route="auth-accounts" ContentTemplate="{DataTemplate pages:AuthenticatorAccounts}" />
-    <ShellContent Route="dashboard" ContentTemplate="{DataTemplate pages:Dashboard}" />
-    <ShellContent Route="guide" ContentTemplate="{DataTemplate pages:Guide}" />
-    <ShellContent Route="tours" ContentTemplate="{DataTemplate pages:Tours}" />
-    <ShellContent Route="travel-wallet" ContentTemplate="{DataTemplate pages:TravelWallet}" />
-    <ShellContent Route="travel-settings" ContentTemplate="{DataTemplate pages:TravelSettings}" />
-    <ShellContent Route="account-settings" ContentTemplate="{DataTemplate pages:AccountSettings}" />
-    <ShellContent Route="create-alarm" ContentTemplate="{DataTemplate pages:CreateAlarm}" />
+    <!-- Blazorページ参照を削除 -->
+
 </Shell>
