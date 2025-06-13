@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">   <!-- 変更点 -->
+<Project Sdk="Microsoft.NET.Sdk">   <!-- 変更点 -->
 
   <PropertyGroup>
     <TargetFrameworks>
@@ -10,8 +10,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
+    <!-- Android設定 -->
+    <ApplicationId>com.jpyc.offline</ApplicationId>
+    <ApplicationTitle>JPYC Offline</ApplicationTitle>
+    <ApplicationVersion>1.0</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+
     <!-- Razor SDK が静的アセット用ターゲットを追加する -->
-    <EnableStaticWebAssets>true</EnableStaticWebAssets>
+    <!-- EnableStaticWebAssets>true</EnableStaticWebAssets> -->
     <MauiBlazorWebViewDomainRelaxationEnabled>true</MauiBlazorWebViewDomainRelaxationEnabled>
     <Configurations>Debug;Release;MSIX</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
@@ -49,8 +59,8 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
     <PackageReference Include="Plugin.LocalNotification" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
-    <PackageReference Include="Microsoft.JSInterop" Version="8.0.10" />
+    <!-- <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" /> -->
+    <!-- <PackageReference Include="Microsoft.JSInterop" Version="8.0.10" /> -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
